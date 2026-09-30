@@ -360,7 +360,7 @@ const candidateCard = (candidate: Candidate, verdict: Judgement) => {
             { class: "candhead" },
             h("span", { class: "candlabel", text: candidate.label }),
             chosen
-                ? h("span", { class: "badge", text: `Jev picked this · ${asPercent(verdict.confidence)}%` })
+                ? h("span", { class: "badge", text: `Jev picked this · ${asPercent(verdict.confidence)}% sure` })
                 : null,
         ),
         h("p", { class: "candtext", text: candidate.text }),
