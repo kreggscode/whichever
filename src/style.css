@@ -164,6 +164,13 @@ h1 {
     transform: translateY(1px);
 }
 
+.btn:disabled,
+.chip:disabled {
+    cursor: default;
+    opacity: 0.55;
+    transform: none;
+}
+
 .btn.primary {
     background: var(--accent);
     color: #fff;

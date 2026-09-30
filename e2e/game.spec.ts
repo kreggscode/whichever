@@ -9,6 +9,15 @@ const PREMISE = "a courier with a sealed letter that must reach the coast before
 const shot = (page: Page, name: string) =>
     page.screenshot({ path: evidence(name), fullPage: true });
 
+/**
+ * Re-asking Jev happens in place: the heading picks up the new lens while the
+ * call is still out, so wait for it to land before touching anything.
+ */
+const settled = async (page: Page) => {
+    await expect(page.locator(".busy")).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator(".busy")).toHaveCount(0, { timeout: 120_000 });
+};
+
 const signIn = async (page: Page) => {
     await page.goto(APP);
     await page.evaluate(
@@ -60,9 +69,8 @@ test("changes the lens and asks Jev again without redrawing", async ({ page }) =
 
     // A different standard, the same three turns, a fresh verdict.
     await page.getByRole("button", { name: "Most wondrous" }).click();
-    await expect(page.locator(".head .sub")).toContainText("judged against: Most wondrous", {
-        timeout: 120_000,
-    });
+    await settled(page);
+    await expect(page.locator(".head .sub")).toContainText("judged against: Most wondrous");
     await expect(page.locator(".candidate")).toHaveCount(3);
     await expect(page.locator(".candidate.chosen")).toHaveCount(1);
     await shot(page, "04-re-lensed");

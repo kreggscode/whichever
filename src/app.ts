@@ -256,6 +256,7 @@ const chipRow = (
                 h("button", {
                     class: `chip${item.id === current ? " picked" : ""}`,
                     type: "button",
+                    disabled: busy,
                     "aria-pressed": String(item.id === current),
                     text: item.name,
                 }),
@@ -326,7 +327,7 @@ const renderStart = () =>
                     render();
                 }),
             ),
-            button("Let Jev decide", () => void begin()),
+            button("Let Jev decide", () => void begin(), "primary", busy),
             h("p", {
                 class: "fine",
                 text: `${CANDIDATES} candidates per turn, up to ${MAX_CHAPTERS} chapters, drawn on your own Pollen.`,
@@ -437,10 +438,10 @@ const renderDecide = () => {
                 h(
                     "div",
                     { class: "tools" },
-                    button("Try again", () => void nextChapter()),
+                    button("Try again", () => void nextChapter(), "primary", busy),
                     story.chapters.length > 0
-                        ? button("End the story", finish, "ghost")
-                        : button("Start over", reset, "ghost"),
+                        ? button("End the story", finish, "ghost", busy)
+                        : button("Start over", reset, "ghost", busy),
                 ),
             ),
         );
@@ -464,10 +465,10 @@ const renderDecide = () => {
         h(
             "div",
             { class: "tools" },
-            button("Take it", () => void take()),
+            button("Take it", () => void take(), "primary", busy),
             story.chapters.length > 0
-                ? button("End the story", finish, "ghost")
-                : button("Start over", reset, "ghost"),
+                ? button("End the story", finish, "ghost", busy)
+                : button("Start over", reset, "ghost", busy),
         ),
     );
 };
@@ -501,10 +502,10 @@ const renderScene = () => {
             "div",
             { class: "tools" },
             atEnd
-                ? button("Read it from the start", finish)
-                : button("Next chapter", () => void nextChapter()),
-            !atEnd ? button("End the story", finish, "ghost") : null,
-            button("Start over", reset, "ghost"),
+                ? button("Read it from the start", finish, "primary", busy)
+                : button("Next chapter", () => void nextChapter(), "primary", busy),
+            !atEnd ? button("End the story", finish, "ghost", busy) : null,
+            button("Start over", reset, "ghost", busy),
         ),
         !isSignedIn() ? signInBlock() : null,
     );
@@ -532,7 +533,7 @@ const renderEnd = () =>
         h(
             "div",
             { class: "tools" },
-            button("Tell another", reset),
+            button("Tell another", reset, "primary", busy),
             !isSignedIn() ? signInBlock() : null,
         ),
     );

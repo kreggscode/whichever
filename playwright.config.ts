@@ -13,7 +13,7 @@ export default defineConfig({
     workers: 1,
     reporter: [["list"]],
     use: {
-        baseURL: local ? "http://127.0.0.1:4173/wanderpost/" : base,
+        baseURL: local ? "http://127.0.0.1:4173/whichever/" : base,
         trace: "retain-on-failure",
         screenshot: "only-on-failure",
         viewport: { width: 430, height: 900 },
@@ -21,7 +21,7 @@ export default defineConfig({
     webServer: local
         ? {
               command: "npm run preview -- --port 4173 --host 127.0.0.1",
-              url: "http://127.0.0.1:4173/wanderpost/",
+              url: "http://127.0.0.1:4173/whichever/",
               reuseExistingServer: true,
               timeout: 60_000,
           }

@@ -47,5 +47,12 @@ export const button = (
     label: string,
     handler: () => void,
     variant: "primary" | "ghost" = "primary",
+    disabled = false,
 ): HTMLButtonElement =>
-    on(h("button", { class: `btn ${variant}`, type: "button", text: label }), "click", handler);
+    on(
+        // `disabled: false` is skipped by the builder, so the attribute only
+        // appears when there is actually a call in flight.
+        h("button", { class: `btn ${variant}`, type: "button", text: label, disabled }),
+        "click",
+        handler,
+    );
